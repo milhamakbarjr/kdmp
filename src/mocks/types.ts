@@ -77,6 +77,9 @@ export interface Order {
   wave_id?: string
   edited_by_store?: boolean
   note?: string
+  arrived_at?: string
+  delivered_at?: string
+  flagged_reason?: string
 }
 
 export interface Wave {

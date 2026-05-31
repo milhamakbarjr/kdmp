@@ -68,23 +68,23 @@ const GROUPS: Record<Role, NavGroup[]> = {
     {
       label: "Supervisor",
       items: [
-        { label: "Cluster health", to: "/", icon: AnalyticsUpIcon },
-        { label: "Exceptions", to: "/in-transit", icon: Alert02Icon },
+        { label: "Cluster health", to: "/supervisor", icon: AnalyticsUpIcon },
+        { label: "Exceptions", to: "/supervisor", icon: Alert02Icon },
       ],
     },
   ],
   exec: [
     {
       label: "Executive",
-      items: [{ label: "Overview", to: "/", icon: ChartIcon }],
+      items: [{ label: "Overview", to: "/exec", icon: ChartIcon }],
     },
   ],
   store: [
     {
       label: "Store",
       items: [
-        { label: "Home", to: "/", icon: Home01Icon },
-        { label: "Past orders", to: "/suggested-orders", icon: Calendar03Icon },
+        { label: "Home", to: "/store", icon: Home01Icon },
+        { label: "Past orders", to: "/store/history", icon: Calendar03Icon },
       ],
     },
   ],
@@ -92,8 +92,8 @@ const GROUPS: Record<Role, NavGroup[]> = {
     {
       label: "Driver",
       items: [
-        { label: "My route", to: "/in-transit", icon: RouteIcon },
-        { label: "History", to: "/reconciliation", icon: MapPinpoint02Icon },
+        { label: "My route", to: "/driver", icon: RouteIcon },
+        { label: "Sign in", to: "/driver/login", icon: MapPinpoint02Icon },
       ],
     },
   ],
