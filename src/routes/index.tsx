@@ -46,6 +46,7 @@ import { Progress } from "@/components/ui/progress"
 import { useMockStore } from "@/mocks/state"
 import { getDemoNow } from "@/mocks"
 import type { Exception } from "@/mocks/types"
+import { useSimulatedError } from "@/components/route-error"
 
 import {
   exceptionReasonLabel,
@@ -68,6 +69,12 @@ import {
 export const Route = createFileRoute("/")({ component: TodayPage })
 
 function TodayPage() {
+  const errorView = useSimulatedError()
+  if (errorView) return errorView
+  return <TodayPageInner />
+}
+
+function TodayPageInner() {
   const dcs = useMockStore((s) => s.dcs)
   const stores = useMockStore((s) => s.stores)
   const orders = useMockStore((s) => s.orders)

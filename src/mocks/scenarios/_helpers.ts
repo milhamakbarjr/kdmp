@@ -12,8 +12,17 @@ import type {
 } from '../types'
 import { skus } from '../fixtures/skus'
 import { stores } from '../fixtures/stores'
+import { users } from '../fixtures/users'
 import { computeSuggestedOrders } from '../engine'
 import { isoOffset } from '../clock'
+
+// The store persona on /store reads the first user with role === 'store'.
+// We must guarantee that store has a draft order in every scenario so the
+// demo can always show the "Saran pesanan" flow.
+const PROTECTED_STORE_ID = (() => {
+  const persona = users.find((u) => u.role === 'store')
+  return persona?.store_id ?? 'store-001'
+})()
 
 function seededRandom(seed: number): () => number {
   let s = seed >>> 0
@@ -32,6 +41,10 @@ export function buildInferredStock(
   const rng = seededRandom(seed)
   const rows: InferredStock[] = []
   const due = new Set<string>()
+  // Always include the protected store so the /store persona has a draft.
+  if (selectedStores.some((s) => s.id === PROTECTED_STORE_ID)) {
+    due.add(PROTECTED_STORE_ID)
+  }
   while (due.size < targetDueStores && due.size < selectedStores.length) {
     const pick = selectedStores[Math.floor(rng() * selectedStores.length)]
     due.add(pick.id)
@@ -88,6 +101,7 @@ export function buildScenario(opts: ScenarioBuildOptions): BuiltScenario {
   let submittedNeeded = opts.submittedExtras
   for (const order of orders) {
     if (submittedNeeded <= 0) break
+    if (order.store_id === PROTECTED_STORE_ID) continue
     if (rng() < 0.6) {
       order.status = 'submitted'
       order.source = 'store'
@@ -104,7 +118,12 @@ export function buildScenario(opts: ScenarioBuildOptions): BuiltScenario {
     const dcId = i % 2 === 0 ? 'dc-jkt-01' : 'dc-bdg-01'
     const waveId = `wave-${String(i + 1).padStart(2, '0')}`
     const ordersForWave = orders
-      .filter((o) => o.status === 'draft' && !o.wave_id)
+      .filter(
+        (o) =>
+          o.status === 'draft' &&
+          !o.wave_id &&
+          o.store_id !== PROTECTED_STORE_ID,
+      )
       .slice(0, 3 + (i % 2))
     for (const o of ordersForWave) {
       o.wave_id = waveId

@@ -14,10 +14,17 @@ import { Card, CardContent } from "@/components/ui/card"
 import { useMockStore } from "@/mocks/state"
 import { useDefaultDriver } from "@/components/driver/driver-layout"
 import type { Order } from "@/mocks/types"
+import { useSimulatedError } from "@/components/route-error"
 
 export const Route = createFileRoute("/driver/")({
-  component: DriverTodayPage,
+  component: DriverTodayRoute,
 })
+
+function DriverTodayRoute() {
+  const errorView = useSimulatedError()
+  if (errorView) return errorView
+  return <DriverTodayPage />
+}
 
 type StopStatus = "queued" | "arrived" | "delivered" | "exception"
 

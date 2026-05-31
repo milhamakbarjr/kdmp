@@ -18,6 +18,9 @@ import { AppSidebar } from "@/components/app-sidebar"
 import { MockupBanner } from "@/components/mockup-banner"
 import { RoleSwitcher } from "@/components/role-switcher"
 import { ScenarioSelector } from "@/components/scenario-selector"
+import { DevtoolsProvider } from "@/components/devtools-context"
+import { ErrorToggle } from "@/components/error-toggle"
+import { CommandPalette } from "@/components/command-palette"
 
 export const Route = createRootRoute({
   head: () => ({
@@ -54,6 +57,7 @@ function AppShell() {
             Active view follows the selected persona.
           </div>
           <div className="ml-auto flex items-center gap-2">
+            <ErrorToggle />
             <ScenarioSelector />
             <RoleSwitcher />
           </div>
@@ -74,8 +78,11 @@ function RootDocument() {
       </head>
       <body>
         <TooltipProvider>
-          <AppShell />
-          <Toaster />
+          <DevtoolsProvider>
+            <AppShell />
+            <CommandPalette />
+            <Toaster />
+          </DevtoolsProvider>
         </TooltipProvider>
         <TanStackDevtools
           config={{ position: "bottom-right" }}

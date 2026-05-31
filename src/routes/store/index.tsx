@@ -20,8 +20,15 @@ import { Separator } from "@/components/ui/separator"
 import { useMockStore } from "@/mocks/state"
 import { getDemoNow } from "@/mocks/clock"
 import { formatDateLong } from "@/components/store/format"
+import { useSimulatedError } from "@/components/route-error"
 
-export const Route = createFileRoute("/store/")({ component: StoreHome })
+export const Route = createFileRoute("/store/")({ component: StoreHomeRoute })
+
+function StoreHomeRoute() {
+  const errorView = useSimulatedError()
+  if (errorView) return errorView
+  return <StoreHome />
+}
 
 function useStorePersonaId(): string {
   const users = useMockStore((s) => s.users)

@@ -24,8 +24,15 @@ import { TrendRow } from "@/components/exec/trend-row"
 import { selectKpiForPeriod, useMockStore } from "@/mocks/state"
 import type { MockState } from "@/mocks/state"
 import type { ScenarioId } from "@/mocks/types"
+import { useSimulatedError } from "@/components/route-error"
 
-export const Route = createFileRoute("/exec/")({ component: ExecOverview })
+export const Route = createFileRoute("/exec/")({ component: ExecOverviewRoute })
+
+function ExecOverviewRoute() {
+  const errorView = useSimulatedError()
+  if (errorView) return errorView
+  return <ExecOverview />
+}
 
 type Period = "today" | "7d" | "30d"
 

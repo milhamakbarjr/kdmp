@@ -52,10 +52,17 @@ import {
 import type { ExceptionReason, Order, OrderLine, SKU, Store } from "@/mocks/types"
 import { ClusterPicker } from "@/components/sup/cluster-picker"
 import type { ClusterOption } from "@/components/sup/cluster-picker"
+import { useSimulatedError } from "@/components/route-error"
 
 export const Route = createFileRoute("/supervisor/")({
-  component: SupervisorHome,
+  component: SupervisorHomeRoute,
 })
+
+function SupervisorHomeRoute() {
+  const errorView = useSimulatedError()
+  if (errorView) return errorView
+  return <SupervisorHome />
+}
 
 const STOCK_OUT_THRESHOLD_DAYS = 1.5
 const ON_TIME_REFERENCE_HOURS = 24
