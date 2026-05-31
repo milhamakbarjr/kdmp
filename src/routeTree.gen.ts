@@ -8,43 +8,167 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./routes/__root"
-import { Route as IndexRouteImport } from "./routes/index"
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as SuggestedOrdersRouteImport } from './routes/suggested-orders'
+import { Route as StoresRouteImport } from './routes/stores'
+import { Route as ReconciliationRouteImport } from './routes/reconciliation'
+import { Route as InTransitRouteImport } from './routes/in-transit'
+import { Route as DispatchRouteImport } from './routes/dispatch'
+import { Route as CatalogRouteImport } from './routes/catalog'
+import { Route as IndexRouteImport } from './routes/index'
 
+const SuggestedOrdersRoute = SuggestedOrdersRouteImport.update({
+  id: '/suggested-orders',
+  path: '/suggested-orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StoresRoute = StoresRouteImport.update({
+  id: '/stores',
+  path: '/stores',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReconciliationRoute = ReconciliationRouteImport.update({
+  id: '/reconciliation',
+  path: '/reconciliation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InTransitRoute = InTransitRouteImport.update({
+  id: '/in-transit',
+  path: '/in-transit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DispatchRoute = DispatchRouteImport.update({
+  id: '/dispatch',
+  path: '/dispatch',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CatalogRoute = CatalogRouteImport.update({
+  id: '/catalog',
+  path: '/catalog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
-  id: "/",
-  path: "/",
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  "/": typeof IndexRoute
+  '/': typeof IndexRoute
+  '/catalog': typeof CatalogRoute
+  '/dispatch': typeof DispatchRoute
+  '/in-transit': typeof InTransitRoute
+  '/reconciliation': typeof ReconciliationRoute
+  '/stores': typeof StoresRoute
+  '/suggested-orders': typeof SuggestedOrdersRoute
 }
 export interface FileRoutesByTo {
-  "/": typeof IndexRoute
+  '/': typeof IndexRoute
+  '/catalog': typeof CatalogRoute
+  '/dispatch': typeof DispatchRoute
+  '/in-transit': typeof InTransitRoute
+  '/reconciliation': typeof ReconciliationRoute
+  '/stores': typeof StoresRoute
+  '/suggested-orders': typeof SuggestedOrdersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  "/": typeof IndexRoute
+  '/': typeof IndexRoute
+  '/catalog': typeof CatalogRoute
+  '/dispatch': typeof DispatchRoute
+  '/in-transit': typeof InTransitRoute
+  '/reconciliation': typeof ReconciliationRoute
+  '/stores': typeof StoresRoute
+  '/suggested-orders': typeof SuggestedOrdersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: "/"
+  fullPaths:
+    | '/'
+    | '/catalog'
+    | '/dispatch'
+    | '/in-transit'
+    | '/reconciliation'
+    | '/stores'
+    | '/suggested-orders'
   fileRoutesByTo: FileRoutesByTo
-  to: "/"
-  id: "__root__" | "/"
+  to:
+    | '/'
+    | '/catalog'
+    | '/dispatch'
+    | '/in-transit'
+    | '/reconciliation'
+    | '/stores'
+    | '/suggested-orders'
+  id:
+    | '__root__'
+    | '/'
+    | '/catalog'
+    | '/dispatch'
+    | '/in-transit'
+    | '/reconciliation'
+    | '/stores'
+    | '/suggested-orders'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CatalogRoute: typeof CatalogRoute
+  DispatchRoute: typeof DispatchRoute
+  InTransitRoute: typeof InTransitRoute
+  ReconciliationRoute: typeof ReconciliationRoute
+  StoresRoute: typeof StoresRoute
+  SuggestedOrdersRoute: typeof SuggestedOrdersRoute
 }
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/": {
-      id: "/"
-      path: "/"
-      fullPath: "/"
+    '/suggested-orders': {
+      id: '/suggested-orders'
+      path: '/suggested-orders'
+      fullPath: '/suggested-orders'
+      preLoaderRoute: typeof SuggestedOrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stores': {
+      id: '/stores'
+      path: '/stores'
+      fullPath: '/stores'
+      preLoaderRoute: typeof StoresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reconciliation': {
+      id: '/reconciliation'
+      path: '/reconciliation'
+      fullPath: '/reconciliation'
+      preLoaderRoute: typeof ReconciliationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/in-transit': {
+      id: '/in-transit'
+      path: '/in-transit'
+      fullPath: '/in-transit'
+      preLoaderRoute: typeof InTransitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dispatch': {
+      id: '/dispatch'
+      path: '/dispatch'
+      fullPath: '/dispatch'
+      preLoaderRoute: typeof DispatchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/catalog': {
+      id: '/catalog'
+      path: '/catalog'
+      fullPath: '/catalog'
+      preLoaderRoute: typeof CatalogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -53,14 +177,20 @@ declare module "@tanstack/react-router" {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CatalogRoute: CatalogRoute,
+  DispatchRoute: DispatchRoute,
+  InTransitRoute: InTransitRoute,
+  ReconciliationRoute: ReconciliationRoute,
+  StoresRoute: StoresRoute,
+  SuggestedOrdersRoute: SuggestedOrdersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 
-import type { getRouter } from "./router.tsx"
-import type { createStart } from "@tanstack/react-start"
-declare module "@tanstack/react-start" {
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
     router: Awaited<ReturnType<typeof getRouter>>
